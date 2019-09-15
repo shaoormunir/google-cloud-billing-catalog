@@ -114,9 +114,7 @@ def event_handler(event, context):
                     print ("formatted price is = {:.10f} ".format(formatted_price))
 
                     put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currency, formatted_price)
-
-
-                break
+                    
     return {
         "message": "Execution of the function was successful.",
         "event": event
