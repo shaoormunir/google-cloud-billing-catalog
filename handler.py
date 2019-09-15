@@ -43,7 +43,7 @@ def put_sku_item_to_db(service_id, sku_id, sku_description, effective_time):
 
     put_item_to_dynamodb(table_name, sku_item_dict)
 
-def put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currency, formatted_price):
+def put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currency, formatted_price, updated_on):
     table_name = os.environ['RATES_TABLE_NAME']
 
     tiered_rate_item_dict = {}
@@ -53,6 +53,7 @@ def put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currenc
     tiered_rate_item_dict['nanos'] = nanos
     tiered_rate_item_dict['currency'] = currency
     tiered_rate_item_dict['formatted_price'] = Decimal(str(formatted_price))
+    tiered_rate_item_dict['updated_on'] = updated_on
 
     put_item_to_dynamodb(table_name, tiered_rate_item_dict)
 
@@ -113,8 +114,8 @@ def event_handler(event, context):
                     print(currency)
                     print ("formatted price is = {:.10f} ".format(formatted_price))
 
-                    put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currency, formatted_price)
-                    
+                    put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currency, formatted_price, updated_on)
+
     return {
         "message": "Execution of the function was successful.",
         "event": event
