@@ -13,7 +13,8 @@ custom:
   SKUsTableName: "skus"
   RatesTableName: "rates"
   S3BucketName: "googlecloudbillingcatalogdump"
-  GoogleCloudAPIKey: "AIzaSyAez4W6SeErUtuQxYiuJAjsJAnwUYwrzxg"
+  #API key needs to be set before deploying
+  GoogleCloudAPIKey: ""
 
 provider:
   name: aws
