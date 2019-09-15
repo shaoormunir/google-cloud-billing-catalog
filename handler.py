@@ -12,7 +12,6 @@ def get_service_info_api_url (api_key, service_id):
     return 'https://cloudbilling.googleapis.com/v1/services/' + service_id + '/skus?key='+api_key
 
 def upload_json_to_s3 (json_data, service_name):
-    # bucket_name = 'cloudbillingdump' # bucket name will come from the system env variable
     bucket_name = os.environ['S3_BUCKET_NAME']
     json_file_name = service_name + '-' + str(datetime.date.today())+'.json'
     s3_client = boto3.resource('s3')
@@ -25,7 +24,6 @@ def put_item_to_dynamodb(table_name, item):
     table.put_item(Item=item)
 
 def put_service_item_to_db(service_id, service_name):
-    # table_name = 'services' # this name will come from system env variable
     table_name = os.environ['SERVICES_TABLE_NAME']
 
     service_item_dict = {}
@@ -35,7 +33,6 @@ def put_service_item_to_db(service_id, service_name):
     put_item_to_dynamodb(table_name, service_item_dict)
 
 def put_sku_item_to_db(service_id, sku_id, sku_description, effective_time):
-    # table_name = 'skus' # this name will come from system env variable
     table_name = os.environ['SKUS_TABLE_NAME']
 
     sku_item_dict = {}
@@ -47,7 +44,6 @@ def put_sku_item_to_db(service_id, sku_id, sku_description, effective_time):
     put_item_to_dynamodb(table_name, sku_item_dict)
 
 def put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currency, formatted_price):
-    # table_name = 'rates' # this name will come from system env variable
     table_name = os.environ['RATES_TABLE_NAME']
 
     tiered_rate_item_dict = {}
@@ -63,15 +59,10 @@ def put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currenc
 
 def event_handler(event, context):
     # api will be retrieved from aws lambda system environment variable
-    # api_key = 'AIzaSyAez4W6SeErUtuQxYiuJAjsJAnwUYwrzxg'
     api_key = os.environ['GOOGLE_CLOUD_API_KEY']
 
-    # compute_services = ['Compute Engine', 'Kubernetes Engine', 'Cloud Run', 'Cloud Run', 'App Engine', 'Cloud Functions']
-    # storage_services = ['Cloud Storage', 'Persistent Disk', 'Cloud Filestore','Data Transfer Services', 'Drive Enterprise']
-
-
-    compute_services = ['App Engine']
-    storage_services = []
+    compute_services = ['Compute Engine', 'Kubernetes Engine', 'Cloud Run', 'App Engine', 'Cloud Functions']
+    storage_services = ['Cloud Storage', 'Persistent Disk', 'Cloud Filestore','Data Transfer Services', 'Drive Enterprise']
 
     # first step is to get the list of all Google Cloud services
     response = requests.get(get_service_list_api_url(api_key))
@@ -84,7 +75,7 @@ def event_handler(event, context):
     # here we have all the service names along with their service ids
     for service in services_json_data['services']:
         if service.get('displayName') in compute_services or service.get('displayName') in storage_services:
-            #for the first table, get the service name and the service id
+            # for the first table, get the service name and the service id
             service_name = service.get('displayName')
             service_id = service.get('serviceId')
 
@@ -97,7 +88,7 @@ def event_handler(event, context):
             upload_json_to_s3(service_json_data, service_name)
             
             for sku in service_json_data['skus']:
-                #for the second table, get the sku id, the sku description
+                # for the second table, get the sku id, the sku description
             
                 sku_id = sku.get('skuId')
                 sku_description = sku.get('description')

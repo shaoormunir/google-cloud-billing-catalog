@@ -1,20 +1,8 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
 service: googlecloudbillingsls
 # app and org for use with dashboard.serverless.com
-app: google-cloud-billing-catalog
-org: shaoormunir
+
+# app: appn ame on serverless.com
+# org: org name on serverless.com
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -32,7 +20,8 @@ provider:
   runtime: python3.7
   iamRoleStatements:
       - Effect: "Allow"
-        Action: # Gives permission to DynamoDB tables in a specific region
+        Action: 
+        # Gives permission to DynamoDB tables in a specific region
           - "dynamodb:DescribeTable"
           - "dynamodb:Query"
           - "dynamodb:Scan"
@@ -46,6 +35,7 @@ provider:
           - { "Fn::GetAtt": ["RatesTable", "Arn"] }
       - Effect: "Allow"
         Action:
+        # gives permission to saving JSON object to S3
           - "s3:PutObject"
           - "s3:PutObjectAcl"
         Resource: { "Fn::Join": ["", ["arn:aws:s3:::${self:custom.S3BucketName}", "/*" ] ] }
@@ -74,9 +64,7 @@ functions:
       S3_BUCKET_NAME: ${self:custom.S3BucketName}
     events:
       - schedule: rate(24 hours)
-      
-  # events:
-  #   - schedule: cron(15 10 * * ? *)
+        # - schedule: cron(15 10 * * ? *)  this will run everyday at 10:15 am
 
 resources:
   Resources:
