@@ -56,7 +56,7 @@ To connect to the serverless.com dashboard, either configure the serverless cred
 
 ## Services covered by the app
 
-By default, the app is only monitoring the storage and compute services as mentioned on the google cloud page for respective categories. If more services are to be added to be monitored, a service from following list can be added to *other_services* list in the handler.py file (list is empty by default):
+By default, the app is only monitoring the storage and compute services as mentioned on the google cloud page for respective categories. If more services are to be added to be monitored, a service from following list can be added to existing *storage_services/compute_services* list or the *other_services* list in the handler.py file (list is empty by default):
 
 - Qubole Qubole Data Service
 - Web Risk
