@@ -54,3 +54,148 @@ In addition to that, you can configure following settings in serverless.yml file
 
 To connect to the serverless.com dashboard, either configure the serverless credentials in the cli tool, or uncomment and set the app and org values in the serverless.yml file.
 
+## Services covered by the app
+
+By default, the app is only monitoring the storage and compute services as mentioned on the google cloud page for respective categories. If more services are to be added to be monitored, a service from following list can be added to *other_services* list in the handler.py file (list is empty by default):
+
+- Qubole Qubole Data Service
+- Web Risk
+- Geolocation API
+- Cloud Text-to-Speech API
+- Cloud Natural Language API
+- Prediction
+- Mavatar Technologies mCart Platform-as-a-Service
+- Test Marketplace Procurable OP Full Solution    
+- Geocoding API
+- Cloud Data Fusion
+- Bkper
+- Maps Elevation API
+- StraaS
+- Cloud Run
+- BigQuery Reservation API
+- Cloud Composer
+- Shape Security Connect
+- Trillo Inc. Trillo Platform Runtime
+- NetApp Cloud Volumes
+- Redis Labs
+- Firebase Realtime Database
+- Robin Storage
+- Translate
+- Cloud Scheduler
+- Fivetran Fivetran Data Pipelines
+- Kentik Detect
+- Transcode API
+- NetApp, Inc. Cloud Manager
+- Google Everest on BareMetal
+- Human API Human API
+- SendGrid
+- BigQuery
+- Firebase Hosting
+- Cloud CDN
+- Genomics
+- Cloud Functions
+- k8sBot
+- Bell Integrator
+- Alcide
+- Roads API
+- Prodoscore
+- Z-Stream
+- Aqua Container Security Platform
+- Kasten K10 Platform
+- Firebase Auth
+- Zync
+- Confluent Cloud for Apache Kafka
+- Elastifile Cloud File System
+- Cohesity Backup as a Service
+- JFrog Cloud
+- Google Maps Mobile SDK
+- Portworx
+- Stackdriver Logging
+- Cloud Dataflow
+- Stackdriver Monitoring
+- Cloud Memorystore for Redis
+- HYCU, Inc HYCU
+- Firebase
+- GliaStudio
+- iKala interactive media inc. StraaS Cloud Media Engine
+- Cloud Speech API
+- BigQuery BI Engine
+- Appranix Site Reliability Automation
+- DKube
+- zData Cloud Enablement Services
+- Cloud IoT Core
+- Compute Engine
+- Cloud Data Labeling Service
+- PingCAP TiDB Operator
+- IBM Power Systems for Google Cloud
+- Cloud Healthcare
+- Cloud Domains
+- Firebase Test Lab
+- Stackdriver
+- CloudHedge Service
+- Tackle Upstream
+- Cloud Build
+- Cloud Video Intelligence API
+- Metadot Mojo Helpdesk
+- Spotinst
+- BigQuery Data Transfer Service
+- Cloud Storage
+- Cloud SQL
+- Twinword Inc. Category Recommendation API
+- Confluent, Inc. confluent-cloud-for-apache-kafka-poc
+- Stackdriver Trace
+- PerimeterX PerimeterX Bot Defender
+- Cloud Pub/Sub
+- Rollbar
+- Global Tax as a Service
+- MongoDB Atlas Professional
+- MongoDB Atlas GCP Free
+- Codefresh
+- USAN Dialogflow Enterprise Telephony Gateway
+- Product-Market Intelligence - Inventurist AI Lite
+- Palo Alto Networks RedLock
+- Elasticsearch
+- Directions API
+- Kafkaesque Technologies Inc. Kafkaesque
+- Aerospike Server Enterprise
+- Vogsy Service
+- Cloud Vision API
+- omniX labs omniX View | Analyze video in real time
+- Time Zone API
+- Cloud Bigtable
+- Google Service Control
+- Source Repository
+- Cloud Spanner
+- Kubernetes Engine
+- Buzzboard SMB Streams
+- Maps Static API
+- Cloud Data Loss Prevention
+- Galactic Fog Gestalt
+- Cloud Talent Solution
+- Cloud Filestore
+- Identity Platform
+- BigQuery Storage API
+- Remote Build Execution
+- Cloud TPU
+- Cloud Machine Learning Engine
+- Distance Matrix API
+- Harness, Inc. Harness
+- Weaveworks
+- Cloud Contact Center
+- ManagedKube Kubernetes Cost Attribution
+- HeadSpin HeadSpin Mobile Performance
+- Red Pill Analytics
+- Cloud AutoML
+- Cloud Key Management Service (KMS)
+- App Engine
+- superQuery
+- Cloud Tasks
+- MongoDB Atlas Starter
+- Cloud DNS
+- Cloud Dialogflow API
+- Security Command Center
+- NS8 NS8 Protect
+- Komprise
+- itopia
+- Actifio Actifio GO GCP
+

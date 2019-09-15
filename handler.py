@@ -53,7 +53,7 @@ def put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currenc
     tiered_rate_item_dict['nanos'] = nanos
     tiered_rate_item_dict['currency'] = currency
     tiered_rate_item_dict['formatted_price'] = Decimal(str(formatted_price))
-    tiered_rate_item_dict['updated_on'] = updated_on
+    tiered_rate_item_dict['updated_on'] = str(updated_on)
 
     put_item_to_dynamodb(table_name, tiered_rate_item_dict)
 
@@ -64,6 +64,7 @@ def event_handler(event, context):
 
     compute_services = ['Compute Engine', 'Kubernetes Engine', 'Cloud Run', 'App Engine', 'Cloud Functions']
     storage_services = ['Cloud Storage', 'Persistent Disk', 'Cloud Filestore','Data Transfer Services', 'Drive Enterprise']
+    other_services = []
 
     # first step is to get the list of all Google Cloud services
     response = requests.get(get_service_list_api_url(api_key))
@@ -75,7 +76,7 @@ def event_handler(event, context):
 
     # here we have all the service names along with their service ids
     for service in services_json_data['services']:
-        if service.get('displayName') in compute_services or service.get('displayName') in storage_services:
+        if service.get('displayName') in compute_services or service.get('displayName') in storage_services or service.get('displayName') in other_services:
             # for the first table, get the service name and the service id
             service_name = service.get('displayName')
             service_id = service.get('serviceId')
