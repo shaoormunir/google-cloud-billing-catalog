@@ -2,6 +2,7 @@ from botocore.vendored import requests
 import json
 import datetime
 import boto3
+import os
 from decimal import Decimal
 
 def get_service_list_api_url (api_key):
@@ -11,8 +12,9 @@ def get_service_info_api_url (api_key, service_id):
     return 'https://cloudbilling.googleapis.com/v1/services/' + service_id + '/skus?key='+api_key
 
 def upload_json_to_s3 (json_data, service_name):
+    # bucket_name = 'cloudbillingdump' # bucket name will come from the system env variable
+    bucket_name = os.environ['S3_BUCKET_NAME']
     json_file_name = service_name + '-' + str(datetime.date.today())+'.json'
-    bucket_name = 'cloudbillingdump' # bucket name will come from the system env variable
     s3_client = boto3.resource('s3')
     s3Object = s3_client.Bucket(bucket_name).Object(json_file_name)
     s3Object.put(Body=bytes(json.dumps(json_data).encode('UTF-8')))
@@ -23,7 +25,8 @@ def put_item_to_dynamodb(table_name, item):
     table.put_item(Item=item)
 
 def put_service_item_to_db(service_id, service_name):
-    table_name = 'services' # this name will come from system env variable
+    # table_name = 'services' # this name will come from system env variable
+    table_name = os.environ['SERVICES_TABLE_NAME']
 
     service_item_dict = {}
     service_item_dict['service_id'] = service_id
@@ -32,7 +35,8 @@ def put_service_item_to_db(service_id, service_name):
     put_item_to_dynamodb(table_name, service_item_dict)
 
 def put_sku_item_to_db(service_id, sku_id, sku_description, effective_time):
-    table_name = 'skus' # this name will come from system env variable
+    # table_name = 'skus' # this name will come from system env variable
+    table_name = os.environ['SKUS_TABLE_NAME']
 
     sku_item_dict = {}
     sku_item_dict['sku_id'] = sku_id
@@ -43,7 +47,8 @@ def put_sku_item_to_db(service_id, sku_id, sku_description, effective_time):
     put_item_to_dynamodb(table_name, sku_item_dict)
 
 def put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currency, formatted_price):
-    table_name = 'rates' # this name will come from system env variable
+    # table_name = 'rates' # this name will come from system env variable
+    table_name = os.environ['RATES_TABLE_NAME']
 
     tiered_rate_item_dict = {}
     tiered_rate_item_dict['sku_id'] = sku_id
@@ -58,7 +63,8 @@ def put_tiered_rate_item_to_db(sku_id, start_usage_amount, units, nanos, currenc
 
 def event_handler(event, context):
     # api will be retrieved from aws lambda system environment variable
-    api_key = 'AIzaSyAez4W6SeErUtuQxYiuJAjsJAnwUYwrzxg'
+    # api_key = 'AIzaSyAez4W6SeErUtuQxYiuJAjsJAnwUYwrzxg'
+    api_key = os.environ['GOOGLE_CLOUD_API_KEY']
 
     # compute_services = ['Compute Engine', 'Kubernetes Engine', 'Cloud Run', 'Cloud Run', 'App Engine', 'Cloud Functions']
     # storage_services = ['Cloud Storage', 'Persistent Disk', 'Cloud Filestore','Data Transfer Services', 'Drive Enterprise']
