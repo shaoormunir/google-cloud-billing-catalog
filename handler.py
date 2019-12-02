@@ -18,9 +18,9 @@ def upload_json_to_s3(json_data, service_name):
     bucket_name = os.environ['S3_BUCKET_NAME']
     json_file_name = service_name + '-' + str(datetime.date.today())+'.json'
     s3_client = boto3.resource('s3')
-    s3Object = s3_client.Bucket(bucket_name).Object(json_file_name)
-    s3Object.put(Body=bytes(json.dumps(json_data).encode('UTF-8')),
-                 ServerSideEncryption='AES256')
+    s3_object = s3_client.Bucket(bucket_name).Object(json_file_name)
+    s3_object.put(Body=bytes(json.dumps(json_data).encode('UTF-8')),
+                  ServerSideEncryption='AES256')
 
 
 def put_item_to_dynamodb(table_name, item):
