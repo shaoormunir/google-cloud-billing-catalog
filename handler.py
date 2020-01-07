@@ -22,7 +22,6 @@ def upload_json_to_s3(json_data, service_name):
     s3_object.put(Body=bytes(json.dumps(json_data).encode('UTF-8')),
                   ServerSideEncryption='AES256')
 
-
 def put_item_to_dynamodb(table_name, item):
     dynamodb_client = boto3.resource('dynamodb')
     table = dynamodb_client.Table(table_name)
